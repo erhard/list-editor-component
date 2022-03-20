@@ -8,16 +8,16 @@
 
 function extendConf (conf, api) {
   // make sure my-ext boot file is registered
-  console.log("Registering my-component");
-  conf.boot.push('~quasar-app-extension-my-component/src/boot/register-my-component.js')
+  console.log("Registering list-editor-component");
+  conf.boot.push('~quasar-app-extension-list-editor-component/src/boot/register-list-editor-component.js')
 
   if (api.hasVite !== true) {
     // make sure boot & component files get transpiled
-    conf.build.transpileDependencies.push(/quasar-app-extension-my-component[\\/]src/)
+    conf.build.transpileDependencies.push(/quasar-app-extension-list-editor-component[\\/]src/)
   }
 
   // make sure my-ext css goes through webpack to avoid ssr issues
-  conf.css.push('~quasar-app-extension-my-component/src/component/MyComponent.sass')
+  conf.css.push('~quasar-app-extension-list-editor-component/src/component/MyComponent.sass')
 }
 
 module.exports = function (api) {
