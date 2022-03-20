@@ -1,0 +1,11 @@
+testapp/
+.*.swp
+._*
+.DS_Store
+.git
+.history
+.npmrc
+.svn
+config.gypi
+npm-debug.log
+.vscode
