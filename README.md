@@ -1,4 +1,5 @@
 # list-editor-component
+
 quasar app extension which gives you a crud on a simple list
 
 #Usage of the app-extension
@@ -7,9 +8,16 @@ quasar app extension which gives you a crud on a simple list
 
 ## Usage
 
+Look at testapp/pages/Index.vue this is an implementation blueprint.
+
+The component is a dump component. You put in a data array and you get events for create update and delete. To do this actions is the task of the calling component (for example via a store).
+Be aware to have a field __uuid in your data. This is necessary to give you an anchor for udate or deletion.
+
+
+
 
 # Development of the app extension
-For developping this component there is an example application in the git repo (not distributed with the npm). To develop locally the npm package without distributing it.
+For developping this component there is an example application (testapp) in the git repo (not distributed with the npm). To develop locally the npm package without distributing it.
 
 Add the component as extension to the testapp :
 Change in the testapp Directory
@@ -32,6 +40,5 @@ start the server :
 quasar dev
 `````
 
-Everytime you change something in the  component, you have to yarn add again and restart your server...... If somebody knows a better solution let me know.
 
 

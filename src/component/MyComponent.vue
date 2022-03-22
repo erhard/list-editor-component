@@ -4,7 +4,7 @@
     <div class="q-pa-md row items-center q-gutter-md row justify-center" >
         <q-table
           :title="label"
-          :rows="rows"
+          :rows="data"
           :columns="columns"
           row-key="name"
         >
@@ -35,7 +35,7 @@
             <q-btn size="sm"  @click="edit(props.row)" icon-right="edit" flat dense  />
           </q-td>
           <q-td auto-width>
-            <q-btn size="sm"  @click="deleteIt(props.row)"  icon-right="delete" flat dense />
+            <q-btn size="sm"  @click="deleteRow(props.row)"  icon-right="delete" flat dense />
           </q-td>
         </q-tr>
  </template>
@@ -58,69 +58,30 @@
     </q-card>
     </div>
   </div>
-</template>
-<script>
-import {getIndexOfObjectInArray} from "src/services/artbarrack/utils"
-import EventBus from 'vjseventbus';
-import { uid } from 'quasar';
-export default {
-  data() {
-    return {
-      show: 'table',
-      columns: [],
-      rows: [],
-      titles: [],
-      edit_buffer: [],
-      current_index: 0
-    };
-  },
-
-  props: {
-    data: {
-      type: Array,
-      default: () => {
-        return [];
-      }
-    },
-    label: {
-      type: String,
-      default: ""
-    },
-    definition: {
-      type: Array,
-      default: () => {
-        return [];
-      }
-  },
-  ident: {
-      type: String,
-      default: ""
-  },
-  name: {
-    type: String,
-    default: "LISTEDITOR"
-  }
-
-  },
-
-
-   watch:{
-       data (val) {
-           console.log("data changed");
-           console.log(val)
-           this.rows=val
-       }
-   },
-
-
-
-  mounted() {
+  </template>
+<script setup>
+import {ref, watch} from "vue";
+import utils from 'jshelperutils'
+let titles=[]
+let columns=[]
+let show=ref('table')
+let edit_buffer = ref([])
+let current_index = 0
+let uuid = "-100"
+const emits = defineEmits(["create",  "update", "delete"])
+const props= defineProps({
+  data: Array,
+  definition: Array,
+  name: String,
+  ident: String,
+  label: String
+  })
     let counter = 0;
     const fieldname = "item";
-    this.definition.forEach(el => {
-      this.titles.push(el.name)
+    props.definition.forEach(el => {
+     titles.push(el.name)
     })
-    this.titles.forEach(el => {
+    titles.forEach(el => {
       let field = fieldname + counter.toString();
       const element = {
         name: el,
@@ -128,73 +89,61 @@ export default {
         align: "left",
         field: el
       };
-      this.columns.push(element);
+      columns.push(element);
       counter = counter + 1;
     });
     //added uuid to the data for identification of the index
-     
-    this.rows = this.data.map(element=>{
-        element["__uuid"] = uid()
-        return element
+    
+    watch(()=> props.data,(a,b)=>{
+     console.log("Data changed")
+     console.log(a)
+     console.log(b) 
     })
-    console.log("rows with UUID");
-    console.log(this.rows);
-  },
 
-  methods: {
-    save() {
-    console.log("save edit");
-    console.log(this.rows);
-    console.log(this.edit_buffer);
-    //this.rows[this.current_index] = this.edit_buffer
-      console.log("data");
-      console.log(this.rows);
-     if(this.show=='edit'){ 
-      EventBus.$emit(this.name + ":update", {ident: this.ident, index: this.current_index, buffer: this.edit_buffer})
-     }
-     if(this.show=='add'){ 
-      EventBus.$emit(this.name + ":create", { ident: this.ident, id: uid(), buffer: this.edit_buffer})
-     }
+    function edit(row) {
+       edit_buffer.value=[]
+        let keys = Object.keys(row)
+        uuid=row.__uuid
+        keys.forEach(el => {
+        if(utils.isObjectInArray(columns, el, 'field')) {
+          edit_buffer.value.push({name: el , value: row[el] })
+        }
+        })
+       show.value='edit'
+    }
 
-      this.show="table"
-    },
-    cancel(){
-        show='table'
-    },
-    add() {
-      this.edit_buffer=[];
-      this.definition.forEach(el => {
+    function save() {
+     if(show.value=='edit'){ 
+     const content = edit_buffer.value
+     const payload = {ident: props.ident, id: uuid, index: current_index, buffer: content}
+     emits("update", payload)
+     }
+     if(show.value=='add'){ 
+       const content = edit_buffer.value
+       const payload = { ident: props.ident, buffer: content}
+       emits("create",payload)
+     }
+      show.value="table"
+    }
+    function cancel(){
+        show.value='table'
+        console.log("cancel pressed")
+    }
+    function deleteRow(row) {
+      emits("delete",{id:row.__uuid})
+    }
+
+    function add() {
+    edit_buffer.value=[];
+    props.definition.forEach(el => {
         let element = {}
         element["name"] = el.name;
         element["value"] = "";
-        element["__uuid"]=uid();
-        this.edit_buffer.push(element);
+        element["__uuid"]="newElement - Please create UUID";
+        edit_buffer.value.push(element);
       });
-      this.show="add"
-    },
-    deleteIt(row){
-        const id = row.__uuid;
-        this.current_index = getIndexOfObjectInArray(this.rows,"__uuid",id)
-        EventBus.$emit(this.name +":delete",  this.current_index, this.ident)
-    },
-
-    edit(row){
-     this.edit_buffer=[]
-       this.show='edit'
-        const id=row["__uuid"];
-        this.current_index = getIndexOfObjectInArray(this.rows,"__uuid",id)
-        //Find Index
-        let keys = Object.keys(row)
-        keys.forEach(el => {
-        console.log("keys");
-        console.log(keys);
-        if(el !="__uuid"){
-        this.edit_buffer.push({name: el , value: row[el] })
-        }
-        })
+      show.value="add" 
     }
-  }
-};
 </script>
 <style lang="scss" scoped>
 .my-card{
