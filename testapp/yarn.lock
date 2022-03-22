@@ -3542,6 +3542,11 @@ jsesc@~0.5.0:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
   integrity sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=
 
+jshelperutils@0.0.4, jshelperutils@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/jshelperutils/-/jshelperutils-0.0.4.tgz#53e504bc1a0c4b2871642fab4b01079ff0faf04d"
+  integrity sha512-sK93AtHxxhEq84MJRU5SUpjTPX1uPvWREcjRqwE9EeJCy1y/PklWryIaDgVgex6E8H3MEh/R0bpG4x2wmLNSTg==
+
 json-parse-better-errors@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
@@ -4613,6 +4618,8 @@ qs@6.9.7:
 
 "quasar-app-extension-list-editor-component@link:////Users/sc/dev/list-editor-component":
   version "0.0.1"
+  dependencies:
+    jshelperutils "^0.0.4"
 
 quasar@^2.0.0:
   version "2.6.1"
@@ -5468,6 +5475,11 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
+
+vjseventbus@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/vjseventbus/-/vjseventbus-0.2.0.tgz#69bc9c4c02211ecfd987b2fb2c20756e466224f8"
+  integrity sha512-BA4bouqBhV6N9e37EnKWuEbZMx7WPSPT2C+MsUciQuXLomlv1TqsCZMTQLzrqvYHEjCEdds5R8KNKeocUFTKnA==
 
 vue-loader@17.0.0:
   version "17.0.0"
