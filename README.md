@@ -2,11 +2,14 @@
 
 quasar app extension which gives you a crud on a simple list
 
-#Usage of the app-extension
+## Usage of the app-extension
 
-## Installation 
+### Installation 
 
-## Usage
+quasar ext add list-editor-component
+
+
+### Usage
 
 Look at testapp/pages/Index.vue this is an implementation blueprint.
 
