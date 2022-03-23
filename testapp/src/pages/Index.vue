@@ -47,6 +47,7 @@ const update=(payload) =>{
 
 const deleteIt = (payload) => {
   console.log("deleteIt")
+  console.log(payload)
   const id = payload.id
   const index = utils.getIndexOfObjectInArray(data.value, "__uuid",id)
   if (index > -1){

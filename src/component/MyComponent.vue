@@ -130,7 +130,7 @@ const props= defineProps({
         console.log("cancel pressed")
     }
     function deleteRow(row) {
-      emits("delete",{id:row.__uuid})
+      emits("delete",{id:row.__uuid, ident: props.ident})
     }
 
     function add() {
