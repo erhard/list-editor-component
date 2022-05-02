@@ -5,6 +5,7 @@
      @update="update($event)"
      @delete="deleteIt($event)"
      :data="data"
+     maxlength="10"
      label="Name and Age"
      :definition= "[{
      name: 'name'

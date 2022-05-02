@@ -1,8 +1,9 @@
 <template>
   <div>
-    <q-card v-if="show=='table'">
+    <q-card class="card" v-if="show=='table'">
     <div class="q-pa-md row items-center q-gutter-md row justify-center" >
-        <q-table
+        <q-table 
+          class="table"
           :title="label"
           :rows="data"
           :columns="columns"
@@ -24,12 +25,17 @@
 
  <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td
+          <q-td 
             v-for="col in props.cols"
             :key="col.name"
             :props="props"
           >
-            {{ col.value }}
+      <div>
+      {{col.value.substring(0,len)}}
+     </div>    
+     <q-tooltip v-if = "col.value.length >= len">
+        {{col.value}} 
+      </q-tooltip>     
           </q-td>
           <q-td auto-width>
             <q-btn size="sm"  @click="edit(props.row)" icon-right="edit" flat dense  />
@@ -74,10 +80,12 @@ const props= defineProps({
   definition: Array,
   name: String,
   ident: String,
-  label: String
+  label: String,
+  maxlength: String
   })
     let counter = 0;
     const fieldname = "item";
+    const len =  props.maxlength? parseInt(props.maxlength) : 10000 
     props.definition.forEach(el => {
      titles.push(el.name)
     })
@@ -150,4 +158,26 @@ const props= defineProps({
   width: 100%;
   max-width: 550px;
 }
+
+.table{
+  table-layout: fixed;
+  min-width: 300px;
+}
+
+
+.test {
+  max-width: 100px;
+  display: inline-block;
+  color: green;
+  overflow-wrap: break-word; 
+ 
+ }
+
+.card {
+  display: inline-block;
+  max-width: 400px;
+}
+
+
+
 </style>
