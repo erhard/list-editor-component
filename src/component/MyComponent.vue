@@ -16,7 +16,9 @@
             :key="col.name"
             :props="props"
           >
+	  <div class="title">
             {{ col.label }}
+	  </div>
           </q-th>
           <q-th auto-width />
           <q-th auto-width />
@@ -154,6 +156,11 @@ const props= defineProps({
     }
 </script>
 <style lang="scss" scoped>
+.title {
+text-transform: capitalize;
+}
+
+
 .my-card{
   width: 100%;
   max-width: 550px;

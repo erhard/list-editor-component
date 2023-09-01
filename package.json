@@ -1,6 +1,6 @@
 {
   "name": "quasar-app-extension-list-editor-component",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": false,
   "description": "Quasar App Extension which injects a Vue component - List Editor",
   "author": "Erhard Karger <erhard@kargers.org>",
@@ -21,6 +21,6 @@
     "yarn": ">= 1.6.0"
   },
   "dependencies": {
-    "jshelperutils": "^0.0.4"
+    "jshelperutils": "^0.1.2"
   }
 }
